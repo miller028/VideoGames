@@ -16,6 +16,7 @@ pygame.init()
 width = 800
 height = 500
 windows = pygame.display.set_mode((width, height))
+pygame.display.set_caption("¡Hello world!")
 
 #Metodo para mantener visible la ventana abierta
 while True:
