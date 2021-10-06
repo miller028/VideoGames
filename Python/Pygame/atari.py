@@ -79,50 +79,50 @@ class Wall(pygame.sprite.Group):
 ####################################################################################
 
 
-#General settings
+#Dimenzionar el tamaño (w x h) de la ventana del juego 
 WIDTH = 640
 HEIGHT = 480
 
-#Configure full-screen
+#Configure full-mywindows
 #WIDTH = ?
 #HEIGHT = ?
 
-BG_COLOR = (4, 152, 231) # (Red, Green, Blue)
-
-screen = pygame.display.set_mode( (WIDTH,  HEIGHT) )
-pygame.display.set_caption('Atari')
-icon = pygame.image.load('images/main_icon.png')
-pygame.display.set_icon(icon)
-
+mywindows = pygame.display.set_mode((WIDTH,  HEIGHT))
+pygame.display.set_caption('Atari')#Para poner nombre a la ventana
+icon = pygame.image.load('images/main_icon.png')#Cargar imagen
+pygame.display.set_icon(icon)#setear imagen
 game_clock = pygame.time.Clock()
 pygame.key.set_repeat(20)
 
+'''
+   RGB:
+   Colores Red, Green, Blue de fondo, trabajados en Hexadecimal que desde
+   0 hasta 255
+'''
+BG_COLOR = (4, 152, 231) # (Red, Green, Blue)
 
 ball = Ball()
 player = Bar()
 wall = Wall(112)
 
-#Loop (Revisión cíclica de los eventos) => Listener
+#Loop (Revisión cíclica de los eventos) => Listener esta pendiente del acontecimiento
 while True:
     game_clock.tick(60)
-    for event in pygame.event.get():
-        #Verificar si se presiono el botón X de la ventana
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        #Verificar si el jugador presionó tecla del teclado
-        elif event.type == pygame.KEYDOWN :
+    for event in pygame.event.get():#mientras no presione un evento de cierrar, se mantendra abierta
+        if event.type == pygame.QUIT:#si preciona x en la ventana sale
+            pygame.quit()#cierra la ventana
+            sys.exit()#cierra o destruye todos los procesos 
+        elif event.type == pygame.KEYDOWN : #Verificar si el jugador presionó tecla del teclado
             player.slide(event)
 
     #Call pibot
     ball.pibot()        
     #Set background color
-    screen.fill(BG_COLOR)        
+    mywindows.fill(BG_COLOR)        
     #Draw de la ball
-    screen.blit(ball.img_ball, ball.rect)
+    mywindows.blit(ball.img_ball, ball.rect)
     #Draw de la bar
-    screen.blit(player.img_bar, player.rect)
+    mywindows.blit(player.img_bar, player.rect)
     #Dibujar muro
-    wall.draw(screen)       
-    #Refresh de elementos en screen
-    pygame.display.flip()
+    wall.draw(mywindows)       
+    pygame.display.flip()#Refresh de elementos en mywindows

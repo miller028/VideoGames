@@ -16,7 +16,7 @@ pygame.init()
 width = 800
 height = 500
 mywindows = pygame.display.set_mode((width, height))
-pygame.display.set_caption("¡Hello world!")
+pygame.display.set_caption("¡Hello world!")#Para poner nombre a la ventana
 icon = pygame.image.load('images/cohete.png')#Cargar imagen
 pygame.display.set_icon(icon)#setear imagen
 
