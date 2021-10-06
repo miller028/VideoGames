@@ -13,14 +13,14 @@ import pygame
 #Inicializar Pygame:
 pygame.init()
 
-#Classe 1
+#Classe 1 bolita
 class Ball(pygame.sprite.Sprite):#sprite forma de tratar las imagenes
     def __init__(self):#selt es el contexto 
         pygame.sprite.Sprite.__init__(self)#cargamos la imagen como sprite en el contexto
         self.img_ball = pygame.image.load('images/bolita.png')#cargamos la imagen.png
-        self.rect = self.img_ball.get_rect()
-        self.rect.centerx = WIDTH / 2
-        self.rect.centery = HEIGHT / 2
+        self.rect = self.img_ball.get_rect()#permite obtener el rectangulo de la imagen
+        self.rect.centerx = WIDTH / 2 #Centra el ancho
+        self.rect.centery = HEIGHT / 2 #Centra el alto
         self.speed = [5, 5] # []
     
     def pibot(self):
@@ -98,7 +98,7 @@ pygame.key.set_repeat(20)
 '''
 BG_COLOR = (4, 152, 231) # (Red, Green, Blue)
 
-ball = Ball()
+ball = Ball()#se llama al instancia de la clase bolita
 player = Bar()
 wall = Wall(112)
 
@@ -114,8 +114,7 @@ while True:
 
     #Call pibot
     ball.pibot()        
-    #Set background color
-    mywindows.fill(BG_COLOR)        
+    mywindows.fill(BG_COLOR)#Set background color       
     #Draw de la ball
     mywindows.blit(ball.img_ball, ball.rect)
     #Draw de la bar
