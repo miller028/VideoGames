@@ -13,13 +13,11 @@ import pygame
 #Inicializar Pygame:
 pygame.init()
 
-####################################################################################
-#Classes
-####################################################################################
-class Ball(pygame.sprite.Sprite):
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        self.img_ball = pygame.image.load('images/bolita.png')
+#Classe 1
+class Ball(pygame.sprite.Sprite):#sprite forma de tratar las imagenes
+    def __init__(self):#selt es el contexto 
+        pygame.sprite.Sprite.__init__(self)#cargamos la imagen como sprite en el contexto
+        self.img_ball = pygame.image.load('images/bolita.png')#cargamos la imagen.png
         self.rect = self.img_ball.get_rect()
         self.rect.centerx = WIDTH / 2
         self.rect.centery = HEIGHT / 2
@@ -77,7 +75,6 @@ class Wall(pygame.sprite.Group):
                 posY += brick.rect.height
     
 ####################################################################################
-
 
 #Dimenzionar el tamaño (w x h) de la ventana del juego 
 WIDTH = 640
