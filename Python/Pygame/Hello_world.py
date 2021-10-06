@@ -17,6 +17,8 @@ width = 800
 height = 500
 mywindows = pygame.display.set_mode((width, height))
 pygame.display.set_caption("¡Hello world!")
+icon = pygame.image.load('images/cohete.png')#Cargar imagen
+pygame.display.set_icon(icon)#setear imagen
 
 '''
    RGB:

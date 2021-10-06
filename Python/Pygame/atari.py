@@ -1,14 +1,16 @@
 '''
-    Developer: jayala
-    Date: 30-sept-2021
+    Developer: Miller Salas
+    Date: 5 - Oct - 2021
     Description:
     Desarrollo de la versión 1.0 de un video juego de atari.
 '''
 
-#Importar librerias
+#Importamos librerias ((Inicio):
 import sys
 import pygame
+#Importamos librerias (Fin):
 
+#Inicializar Pygame:
 pygame.init()
 
 ####################################################################################
