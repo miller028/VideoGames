@@ -46,7 +46,7 @@ while True:
         if event.type == pygame.QUIT : #si preciona x en la ventana sale
             pygame.QUIT #cierra la ventana
             sys.exit()#cierra o destruye todos los procesos 
-    mywindows.fill(y)
+    mywindows.fill(y) #color de dondo de ventana  
     pygame.draw.rect(mywindows, red, rect1)#Para dibujar se nesecita el contexto, color, rectangulo
     pygame.draw.rect(mywindows, blue, rect2)
     
