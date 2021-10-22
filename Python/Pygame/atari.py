@@ -22,6 +22,7 @@ class Ball(pygame.sprite.Sprite):#sprite forma de tratar las imagenes
         self.rect.centerx = WIDTH / 2 #Centra el ancho
         self.rect.centery = HEIGHT / 2 #Centra el alto
         self.speed = [5, 5] #Velocidad del movimiento de la bolita con rspecto al marco 
+                            #[frecuencia del movimiento][amplitud del movimiento]
     
     def pibot(self):#metodo o accion para hacer rebotar una bolita 
         #Validar el eje Y ↓↑
