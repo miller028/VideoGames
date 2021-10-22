@@ -114,7 +114,9 @@ BG_COLOR = (0, 191, 255) # (Red, Green, Blue)
 #Inicio de invocaciones
 ball = Ball()#se llama la instancia de la clase bolita (Ball) y nombra una variable(ball)
 player = Bar()# manipula la barra el jugador
-wall = Wall(112)#muro que tiene 112 ladrillos
+
+total_latrillos = int(input("Digita la cantidad de ladrillos a generar "))
+wall = Wall(total_latrillos)#muro que tiene 112 ladrillos
 #Fin de invocaciones
 
 #Loop (Revisión cíclica de los eventos) => Listener esta pendiente del acontecimiento
@@ -155,9 +157,8 @@ while True:
         if centroX < Brick.rect.left or centroX >Brick.rect.right:#vamos 
             ball.speed[0] = -ball.speed [0]#afectamos el valor de la veolocidad, lo negamos con -
         else:
-            ball.speed [0] = ball.speed [0]#Vamos afectar la trayectoria
-
-
-
+            ball.speed [1] = ball.speed [1]#Vamos afectar la trayectoria
+              
+        wall.remove(Brick)#aqui se quitan los ladrillos
 
 #Fin de programacion de Collisions entre la bola y el wall(ladrillos)
