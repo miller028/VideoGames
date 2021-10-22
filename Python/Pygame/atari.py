@@ -23,7 +23,7 @@ class Ball(pygame.sprite.Sprite):#sprite forma de tratar las imagenes
         self.rect.centery = HEIGHT / 2 #Centra el alto
         self.speed = [5, 5] #Velocidad del movimiento de la bolita con rspecto al marco 
     
-    def pibot(self):#hacer rebotar una bolita 
+    def pibot(self):#metodo o accion para hacer rebotar una bolita 
         #Validar el eje Y ↓↑
         if self.rect.bottom >= HEIGHT or self.rect.top <=0:#tottom es por abajo y top por arriba
             self.speed[1] = -self.speed[1]#rebota en base al eje Y
@@ -32,51 +32,61 @@ class Ball(pygame.sprite.Sprite):#sprite forma de tratar las imagenes
             self.speed[0] = -self.speed[0]#rebota en base al eje x
 
         self.rect.move_ip(self.speed) 
+    
+    #def saludos(self):#metodo interno
+       # print("::::Este es un saludo de prueba ::::")
+
 #Fin de Classe 1 bolita
 
+#Inicia Classe barra que realiza el recorrido de izquierda a derecha:
+class Bar(pygame.sprite.Sprite):#
+    def __init__(self):#selt es el contexto
+        pygame.sprite.Sprite.__init__(self)#cargamos la imagen como sprite en el contexto
+        self.img_bar = pygame.image.load('images/paleta.png')#cargamos la imagen.png
+        self.rect = self.img_bar.get_rect()#permite obtener el rectangulo de la imagen
+        self.rect.midbottom = (WIDTH / 2, HEIGHT - 10)#centramos el objeto en X con midbottom (480 restele -10)
+        self.speed = [0, 0]#Velocidad del movimiento de la barra que hace de izquierda a derecha
 
-#Inicia Classe 2:
-class Bar(pygame.sprite.Sprite):
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        self.img_bar = pygame.image.load('images/paleta.png')
-        self.rect = self.img_bar.get_rect()
-        self.rect.midbottom = (WIDTH / 2, HEIGHT - 10)
-        self.speed = [0, 0]
-
-    def slide(self, listener):
-        if listener.key == pygame.K_LEFT and self.rect.left > 0 :
+    def slide(self, listener):#metodo o accion para hacer que se mueva de izquierda a derecha la barrita
+                              #listener detecta si fue presionado o no 
+        if listener.key == pygame.K_LEFT and self.rect.left > 0 :#para saber si el usuario preciono la tecla izquierda
             self.speed = [-5, 0]
-        elif listener.key == pygame.K_RIGHT and self.rect.right < WIDTH :
+        elif listener.key == pygame.K_RIGHT and self.rect.right < WIDTH :#para saber si el usuario preciono la tecla derecha
             self.speed = [5, 0]
         else :
             self.speed = [0, 0]     
 
         self.rect.move_ip(self.speed)
-####################################################################################
-class Brick(pygame.sprite.Sprite):
+
+#Fin de la  Classe barra que realiza el recorrido de izquierda a derecha
+
+#Inicio de Clase ladrillo
+class Brick(pygame.sprite.Sprite):#sprite forma de tratar las imagenes →→→ Ladrillos
     def __init__(self, position):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load('images/ladrillo.png')
-        self.rect = self.image.get_rect()
-        self.rect.topleft = position
+        self.image = pygame.image.load('images/ladrillo.png')#Cargar la Imagen del ladrillo
+        self.rect = self.image.get_rect()#permite obtener el rectangulo de la imagen
+        self.rect.topleft = position #Para darle una posicion inicial parte superior izquierda
 
-class Wall(pygame.sprite.Group):
-    def __init__(self, totalBricks):
-        pygame.sprite.Group.__init__(self)
+#Fin de Clase ladrillo
+
+#Inicio de Clase muro
+class Wall(pygame.sprite.Group):#
+    def __init__(self, totalBricks):#totalBricks, es para el total de ladrillos
+        pygame.sprite.Group.__init__(self)#para crear un grupo o replicar el objeto que ingresa
         posX = 0
         posY = 10
 
-        for i in range(totalBricks):
+        for i in range(totalBricks):#para dibujar la cantidad de ladrillos que se quiere
             brick = Brick(( posX, posY ))
-            self.add(brick)
+            self.add(brick)#agrega el ladrillo que llegue
 
-            posX += brick.rect.width
-            if posX >= WIDTH :
+            posX += brick.rect.width#+=, quiere decir que incremente o aumente un ladrillo haia el ancho
+            if posX >= WIDTH :#validar si llega al limite del ancho 
                 posX = 0
-                posY += brick.rect.height
+                posY += brick.rect.height#+=, quiere decir que incremente o aumente un ladrillo 
     
-####################################################################################
+#Fin de Clase muro 
 
 #Dimenzionar el tamaño (w x h) de la ventana del juego 
 WIDTH = 640
@@ -90,8 +100,8 @@ mywindows = pygame.display.set_mode((WIDTH,  HEIGHT))
 pygame.display.set_caption('Atari')#Para poner nombre a la ventana
 icon = pygame.image.load('images/main_icon.png')#Cargar imagen
 pygame.display.set_icon(icon)#setear imagen
-game_clock = pygame.time.Clock()#
-pygame.key.set_repeat(20)
+game_clock = pygame.time.Clock()#reloj
+pygame.key.set_repeat(20)#para que me acepte la tecla presioar de la barra
 
 '''
    RGB:
@@ -100,9 +110,11 @@ pygame.key.set_repeat(20)
 '''
 BG_COLOR = (0, 191, 255) # (Red, Green, Blue)
 
+#Inicio de invocaciones
 ball = Ball()#se llama la instancia de la clase bolita (Ball) y nombra una variable(ball)
-player = Bar()
-wall = Wall(112)
+player = Bar()# manipula la barra el jugador
+wall = Wall(112)#muro que tiene 112 ladrillos
+#Fin de invocaciones
 
 #Loop (Revisión cíclica de los eventos) => Listener esta pendiente del acontecimiento
 while True:
@@ -114,6 +126,7 @@ while True:
         elif event.type == pygame.KEYDOWN : #Verificar si el jugador presionó tecla del teclado
             player.slide(event)
 
+   # ball.saludos()  #Saludos por consola
     ball.pibot() #Call pibot de la clase 1:     
     mywindows.fill(BG_COLOR)#color de dondo de ventana       
     #Draw de la ball
