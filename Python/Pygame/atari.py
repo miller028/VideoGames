@@ -23,7 +23,7 @@ class Ball(pygame.sprite.Sprite):#sprite forma de tratar las imagenes
         self.rect.centery = HEIGHT / 2 #Centra el alto
         self.speed = [5, 5] #Velocidad del movimiento de la bolita con rspecto al marco 
                             #[frecuencia del movimiento][amplitud del movimiento]
-    
+                            #[0,1]→ hace referencia a la posicion 0 del vector y posicion 1 del vector
     def pibot(self):#metodo o accion para hacer rebotar una bolita 
         #Validar el eje Y ↓↑
         if self.rect.bottom >= HEIGHT or self.rect.top <=0:#tottom es por abajo y top por arriba
@@ -137,3 +137,27 @@ while True:
     #Dibujar muro
     wall.draw(mywindows)       
     pygame.display.flip()#Refresh de elementos en mywindows
+
+#Inicio de la programcion de Collisions entre barra y bola
+    if pygame.sprite.collide_rect(ball, player):#collide_rect lo que permite es cambiar (trayectoria) la amplitud, solo la afecta
+      ball.speed [1] = -ball.speed [1]#rebota en la barra y cambie la trayectoria de la posicion 1 en base al rebote  
+#Fin de la programcion de Collisions entre barra y bola
+
+#Inicio de programacion de Collisions entre la bola y el wall(ladrillos) → destruir ladrillos
+    ladrillos = pygame.sprite.spritecollide(ball,  wall, False, collided = None) #guardamos en una variable vector→(ladrillos),la canditad de ladrillos
+                                            #sprite: Es el objeto que va a chocar, es la bolita. ponemos en la funcion ball
+                                            #grop: Son los elementos  que toca la bolita y los destruye los ladrillos. ponemos en la funcion wall
+                                            #dokill: quitamos dokill de la funcion por el momento y ponemos false 
+    if ladrillos:#Mientras existan ladrillos para chocar
+        Brick = ladrillos [0]#ladrillos [0], quiere decir posicion 0 → ball
+        centroX = ball.rect.centerx#centerx → es palabra reservada
+
+        if centroX < Brick.rect.left or centroX >Brick.rect.right:#vamos 
+            ball.speed[0] = -ball.speed [0]#afectamos el valor de la veolocidad, lo negamos con -
+        else:
+            ball.speed [0] = ball.speed [0]#Vamos afectar la trayectoria
+
+
+
+
+#Fin de programacion de Collisions entre la bola y el wall(ladrillos)
