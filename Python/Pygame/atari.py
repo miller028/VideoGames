@@ -94,15 +94,24 @@ class Wall(pygame.sprite.Group):#
 def Game_Over ():#Metodo o funcion si llega a tocar piso, pierda }
      mensaje = 'Perdiste, Vuelve a intentarlo'
      TextoColor = (0, 0, 139)#color del texto en RGB
-     TextoEstilo = pygame.font.SysFont ('Arial', 30)#El tipo de fuente es de la libreria pygame
+     TextoEstilo = pygame.font.SysFont ('Arial', 60)#El tipo de fuente es de la libreria pygame
      txt_windows = TextoEstilo.render (mensaje, True, TextoColor)#Primer parametro → mensaje. Segundo parametro → True. Tercer parametro → color
      txt_windows_rect = txt_windows.get_rect ()#txt_windows_rect se guarda el rectangulo que se genera de txt_windows
      txt_windows_rect.center = [WIDTH/2, HEIGHT/2]#Se divide entre 2, para centrarlo en pantalla
-     mywindows.bit (txt_windows, txt_windows_rect)#Setee texto en la pantalla principal. Llevara 2 parametros: parametro 1 → texto del render, parametro 2 → variable del rectangulo 
-     pygame.display.fip ()
-     time.sleep (2)#Pausa de 2 segundos para mostrar el mensaje 
+     mywindows.blit (txt_windows, txt_windows_rect)#Setee texto en la pantalla principal. Llevara 2 parametros: parametro 1 → texto del render, parametro 2 → variable del rectangulo 
+     pygame.display.flip ()
+     print('Perdiste')#Mensaje por consola de pertdiste si toca piso
+     time.sleep (4)#Pausa de 2 segundos para mostrar el mensaje 
+     sys.exit ()#cierra la ventana una vez pierda
 
 #Fin de Funcion o medoto  Game_Over
+
+#Inicio FuNCION O metodo Colocar_Puntaje 
+#def colocar_Puntaje ():
+
+
+#Fin FuNCION O metodo Colocar_Puntaje 
+
 
 #Dimenzionar el tamaño (w x h) de la ventana del juego 
 WIDTH = 640
@@ -132,6 +141,8 @@ player = Bar()# manipula la barra el jugador
 
 #total_latrillos = int(input("Digita la cantidad de ladrillos a generar "))
 wall = Wall(150)#muro que tiene 112 ladrillos
+
+puntaje = 0
 #Fin de invocaciones
 
 #Loop (Revisión cíclica de los eventos) => Listener esta pendiente del acontecimiento
@@ -177,7 +188,6 @@ while True:
         wall.remove(Brick)#aqui se quitan los ladrillos
 
     if ball.rect.bottom >= HEIGHT:#llamar la funcion Game_Over solo cuando la bola toca piso
-      #  Game_Over ()#LLamamos a la funcion Game_Over, cuando la pelota toque piso
+       Game_Over ()#LLamamos a la funcion Game_Over, cuando la pelota toque piso
 
-
-#Fin de programacion de Collisions entre la bola y el wall(ladrillos)
+     #Fin de programacion de Collisions entre la bola y el wall(ladrillos)
