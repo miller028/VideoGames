@@ -9,6 +9,7 @@
 import sys
 import pygame
 import time
+import os #son ejecuciones del sistema operativo
 #Importamos librerias (Fin):
 
 #Inicializar Pygame:
@@ -94,21 +95,28 @@ class Wall(pygame.sprite.Group):#
 def Game_Over ():#Metodo o funcion si llega a tocar piso, pierda }
      mensaje = 'Perdiste, Vuelve a intentarlo'
      TextoColor = (0, 0, 139)#color del texto en RGB
-     TextoEstilo = pygame.font.SysFont ('Arial', 60)#El tipo de fuente es de la libreria pygame
+     TextoEstilo = pygame.font.SysFont ('Arial', 40)#El tipo de fuente es de la libreria pygame
      txt_windows = TextoEstilo.render (mensaje, True, TextoColor)#Primer parametro → mensaje. Segundo parametro → True. Tercer parametro → color
      txt_windows_rect = txt_windows.get_rect ()#txt_windows_rect se guarda el rectangulo que se genera de txt_windows
      txt_windows_rect.center = [WIDTH/2, HEIGHT/2]#Se divide entre 2, para centrarlo en pantalla
      mywindows.blit (txt_windows, txt_windows_rect)#Setee texto en la pantalla principal. Llevara 2 parametros: parametro 1 → texto del render, parametro 2 → variable del rectangulo 
      pygame.display.flip ()
      print('Perdiste')#Mensaje por consola de pertdiste si toca piso
-     time.sleep (4)#Pausa de 2 segundos para mostrar el mensaje 
-     sys.exit ()#cierra la ventana una vez pierda
-
+     time.sleep (3)#Pausa de 2 segundos para mostrar el mensaje 
+    # sys.exit ()#cierra la ventana una vez pierda
 #Fin de Funcion o medoto  Game_Over
 
 #Inicio FuNCION O metodo Colocar_Puntaje 
-#def colocar_Puntaje ():
-
+def colocar_Puntaje ():
+      TextoColor = (255, 255, 255)#color del texto en RGB
+      TextoEstilo = pygame.font.SysFont ('Arial', 40)#El tipo de fuente es de la libreria pygame.
+                                                     #TextoEstilo → sale en gris porque esta declarada pero que no esta en uso
+      txt_windows = TextoEstilo.render (str (puntaje).zfill (5), True, TextoColor)#Primer parametro → puntaje. Segundo parametro → True. Tercer parametro → color  
+                                                                                 #str (puntaje) → se lo pasa a string
+                                                                                 # zfill (1) →  
+      txt_windows_rect = txt_windows.get_rect ()#txt_windows_rect se guarda el rectangulo que se genera de txt_windows
+      txt_windows_rect.topleft = [0, 0]
+      mywindows.blit (txt_windows, txt_windows_rect)#Setee texto en la pantalla principal. Llevara 2 parametros: parametro 1 → texto del render, parametro 2 → variable del rectangulo 
 
 #Fin FuNCION O metodo Colocar_Puntaje 
 
@@ -136,11 +144,42 @@ pygame.key.set_repeat(20)#para que me acepte la tecla presioar de la barra
 BG_COLOR = (0, 191, 255) # (Red, Green, Blue)
 
 #Inicio de invocaciones
+
+
+
+
 ball = Ball()#se llama la instancia de la clase bolita (Ball) y nombra una variable(ball)
 player = Bar()# manipula la barra el jugador
 
-#total_latrillos = int(input("Digita la cantidad de ladrillos a generar "))
-wall = Wall(150)#muro que tiene 112 ladrillos
+#Inicio validar la candidad de ladrillos
+print('Menu nivel de juego')
+print('1. Nivel Normal')
+print('2. Nivel Intermedio')
+print('3. Nivel Avanzado')
+print('4. Salir')
+
+Estado =True
+while Estado:#Condicional que nos pide el nivel, siempre que el numero ingresado este dentro del rango.
+    total_latrillos = int(input('Seleccione el nivel '))
+    if total_latrillos >= 1 and total_latrillos <= 4:#Rango de 1 a 3
+        Estado = False
+if total_latrillos == 1:
+     total_latrillos =20
+elif total_latrillos == 2:
+     total_latrillos = 10
+elif total_latrillos == 3:
+     total_latrillos = 200
+elif total_latrillos == 4:
+     print('Has salido del juego')
+     os.system ('Pause')# os probiene de → import os
+     sys.exit ()#cierra la ventana
+else:
+    print('Opcion invalida')
+    os.system ('Pause')# os probiene de → import os
+    sys.exit ()#cierra la ventana
+   
+wall = Wall(total_latrillos)#muro que tiene 112 ladrillos
+#Fin validar cantidad de ladrillos 
 
 puntaje = 0
 #Fin de invocaciones
@@ -158,12 +197,10 @@ while True:
    # ball.saludos()  #Saludos por consola
     ball.pibot() #Call pibot de la clase 1:     
     mywindows.fill(BG_COLOR)#color de dondo de ventana       
-    #Draw de la ball
-    mywindows.blit(ball.img_ball, ball.rect)
-    #Draw de la bar
-    mywindows.blit(player.img_bar, player.rect)
-    #Dibujar muro
-    wall.draw(mywindows)       
+    colocar_Puntaje ()
+    mywindows.blit(ball.img_ball, ball.rect)#Draw de la ball
+    mywindows.blit(player.img_bar, player.rect)#Draw de la bar
+    wall.draw(mywindows)       #Dibujar muro   
     pygame.display.flip()#Refresh de elementos en mywindows
 
 #Inicio de la programcion de Collisions entre barra y bola
@@ -186,6 +223,8 @@ while True:
             ball.speed [1] = ball.speed [1]#Vamos afectar la trayectoria
               
         wall.remove(Brick)#aqui se quitan los ladrillos
+        puntaje = puntaje + 1#Primera forma de hacer el incremento
+                             #Segunda forma de hacer el incremento → puntaje += 1
 
     if ball.rect.bottom >= HEIGHT:#llamar la funcion Game_Over solo cuando la bola toca piso
        Game_Over ()#LLamamos a la funcion Game_Over, cuando la pelota toque piso
