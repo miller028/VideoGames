@@ -23,7 +23,7 @@ class Ball(pygame.sprite.Sprite):#sprite forma de tratar las imagenes
         self.rect = self.img_ball.get_rect()#permite obtener el rectangulo de la imagen
         self.rect.centerx = WIDTH / 2 #Centra el ancho
         self.rect.centery = HEIGHT / 2 #Centra el alto
-        self.speed = [5, 5] #Velocidad del movimiento de la bolita con rspecto al marco 
+        self.speed = [2, 2] #Velocidad del movimiento de la bolita con rspecto al marco 
                             #[frecuencia del movimiento][amplitud del movimiento]
                             #[0,1]→ hace referencia a la posicion 0 del vector y posicion 1 del vector
     def pibot(self):#metodo o accion para hacer rebotar una bolita 
@@ -102,7 +102,7 @@ def Game_Over ():#Metodo o funcion si llega a tocar piso, pierda }
      mywindows.blit (txt_windows, txt_windows_rect)#Setee texto en la pantalla principal. Llevara 2 parametros: parametro 1 → texto del render, parametro 2 → variable del rectangulo 
      pygame.display.flip ()
      print('Perdiste')#Mensaje por consola de pertdiste si toca piso
-     time.sleep (3)#Pausa de 2 segundos para mostrar el mensaje 
+     time.sleep (2)#Pausa de 2 segundos para mostrar el mensaje 
     # sys.exit ()#cierra la ventana una vez pierda
 #Fin de Funcion o medoto  Game_Over
 
@@ -113,9 +113,9 @@ def colocar_Puntaje ():
                                                      #TextoEstilo → sale en gris porque esta declarada pero que no esta en uso
       txt_windows = TextoEstilo.render (str (puntaje).zfill (5), True, TextoColor)#Primer parametro → puntaje. Segundo parametro → True. Tercer parametro → color  
                                                                                  #str (puntaje) → se lo pasa a string
-                                                                                 # zfill (1) →  
+                                                                                 # zfill (1) → cantidad de digitos del puntaje  
       txt_windows_rect = txt_windows.get_rect ()#txt_windows_rect se guarda el rectangulo que se genera de txt_windows
-      txt_windows_rect.topleft = [0, 0]
+      txt_windows_rect.topleft = [1, 400]
       mywindows.blit (txt_windows, txt_windows_rect)#Setee texto en la pantalla principal. Llevara 2 parametros: parametro 1 → texto del render, parametro 2 → variable del rectangulo 
 
 #Fin FuNCION O metodo Colocar_Puntaje 
@@ -166,7 +166,7 @@ while Estado:#Condicional que nos pide el nivel, siempre que el numero ingresado
 if total_latrillos == 1:
      total_latrillos =20
 elif total_latrillos == 2:
-     total_latrillos = 10
+     total_latrillos = 100
 elif total_latrillos == 3:
      total_latrillos = 200
 elif total_latrillos == 4:
