@@ -103,7 +103,8 @@ def Game_Over ():#Metodo o funcion si llega a tocar piso, pierda }
      mywindows.blit (txt_windows, txt_windows_rect)#Setee texto en la pantalla principal. Llevara 2 parametros: parametro 1 → texto del render, parametro 2 → variable del rectangulo 
      pygame.display.flip ()
      print('Perdiste')#Mensaje por consola de pertdiste si toca piso
-     time.sleep (1)#Pausa de 2 segundos para mostrar el mensaje 
+     time.sleep (10)#Pausa de 2 segundos para mostrar el mensaje 
+   
     # sys.exit ()#cierra la ventana una vez pierda
 #Fin de Funcion o medoto  Game_Over
 
@@ -168,7 +169,7 @@ BG_COLOR = (0, 191, 255) # (Red, Green, Blue)
 
 chocar = pygame.mixer.Sound ('Sound/Sonido1.mp3')#para importar el sonido
 out_of = pygame.mixer.Sound ('Sound/Out of.mp3')#Importar el sonido
-#gameover = pygame.mixer.Sound ('Sound/Game over.mp3')#Importar el sonido
+game = pygame.mixer.Sound ('Sound/game-over-1-gameover.mp3')#Importar el sonido
 
 ball = Ball()#se llama la instancia de la clase bolita (Ball) y nombra una variable(ball)
 player = Bar()# manipula la barra el jugador
@@ -204,7 +205,7 @@ wall = Wall(total_latrillos)#muro que tiene 112 ladrillos
 #Fin validar cantidad de ladrillos 
 
 puntaje = 0
-Vidas_Jugador = 10 #El juego comienza con 5 vidas
+Vidas_Jugador = 2 #El juego comienza con 5 vidas
 #Fin de invocaciones
 
 #Loop (Revisión cíclica de los eventos) => Listener esta pendiente del acontecimiento
@@ -250,7 +251,6 @@ while True:
         wall.remove(Brick)#aqui se quitan los ladrillos
         puntaje = puntaje + 1#Primera forma de hacer el incremento
                              #Segunda forma de hacer el incremento → puntaje += 1
-       # explocion.play ()
         chocar.play ()
 
     #if ball.rect.bottom >= HEIGHT:#llamar la funcion Game_Over solo cuando la bola toca piso
@@ -259,9 +259,15 @@ while True:
     #validar vidas → Restar vidas 
     if ball.rect.bottom >= HEIGHT:#Restar vdias solo cuando la bola toca piso
        Vidas_Jugador = Vidas_Jugador - 1 #Restarle vida , cuando la pelota toque piso → Vidas_Jugador -=1
-       out_of.play () #LLamamos a la variable soniddo, la cual tiene importado el tono
-       time.sleep (0.900)#Pausa de 0,9 segundos para dar pausa a la bola
+       if Vidas_Jugador == 1:
+         out_of.play () #LLamamos a la variable soniddo, la cual tiene importado el tono
+         time.sleep (0.900)#Pausa de 0,9 segundos para dar pausa a la bola
+       else:
+            game.play()
+
     if Vidas_Jugador == 0 :
         Game_Over ()#LLamamos a la funcion Game_Over, cuando la pelota toque piso que muestra mensaje perdiste
-
+   
      #Fin de programacion de Collisions entre la bola y el wall(ladrillos)
+
+   
