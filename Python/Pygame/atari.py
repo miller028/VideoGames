@@ -102,23 +102,42 @@ def Game_Over ():#Metodo o funcion si llega a tocar piso, pierda }
      mywindows.blit (txt_windows, txt_windows_rect)#Setee texto en la pantalla principal. Llevara 2 parametros: parametro 1 → texto del render, parametro 2 → variable del rectangulo 
      pygame.display.flip ()
      print('Perdiste')#Mensaje por consola de pertdiste si toca piso
-     time.sleep (2)#Pausa de 2 segundos para mostrar el mensaje 
+     time.sleep (1)#Pausa de 2 segundos para mostrar el mensaje 
     # sys.exit ()#cierra la ventana una vez pierda
 #Fin de Funcion o medoto  Game_Over
 
-#Inicio FuNCION O metodo Colocar_Puntaje 
+#Inicio FuNCION O metodo Colocar_Puntaje:
 def colocar_Puntaje ():
       TextoColor = (255, 255, 255)#color del texto en RGB
       TextoEstilo = pygame.font.SysFont ('Arial', 40)#El tipo de fuente es de la libreria pygame.
                                                      #TextoEstilo → sale en gris porque esta declarada pero que no esta en uso
-      txt_windows = TextoEstilo.render (str (puntaje).zfill (5), True, TextoColor)#Primer parametro → puntaje. Segundo parametro → True. Tercer parametro → color  
+      txt_windows = TextoEstilo.render (str (puntaje).zfill (3), True, TextoColor)#Primer parametro → puntaje. Segundo parametro → True. Tercer parametro → color  
                                                                                  #str (puntaje) → se lo pasa a string
                                                                                  # zfill (1) → cantidad de digitos del puntaje  
       txt_windows_rect = txt_windows.get_rect ()#txt_windows_rect se guarda el rectangulo que se genera de txt_windows
-      txt_windows_rect.topleft = [1, 400]
+      txt_windows_rect.topleft = [45, 400]
       mywindows.blit (txt_windows, txt_windows_rect)#Setee texto en la pantalla principal. Llevara 2 parametros: parametro 1 → texto del render, parametro 2 → variable del rectangulo 
 
 #Fin FuNCION O metodo Colocar_Puntaje 
+
+#Inicio funcion o metodo vidas:
+def poner_Vida ():
+    label  = 'Vidas: ' #Texo que aparece en pantalla de 'vidas'
+    TextoColor = (255, 255, 255)#color del texto en RGB
+    TextoEstilo = pygame.font.SysFont ('Arial', 40)#El tipo de fuente es de la libreria pygame.
+                                                     #TextoEstilo → sale en gris porque esta declarada pero que no esta en uso
+    texto =  label + str(Vidas_Jugador).zfill (1)#Concatenamos el numero de vidas. poner_Vidas se lo pasa a sring → cadena 
+    txt_windows = TextoEstilo.render (texto, True, TextoColor)#Primer parametro → texto. Segundo parametro → True. Tercer parametro → color 
+    txt_windows_rect = txt_windows.get_rect ()#txt_windows_rect se guarda el rectangulo que se genera de txt_windows
+    txt_windows_rect.topleft = [450, 400]#Setee las vidas
+    mywindows.blit (txt_windows, txt_windows_rect)#Setee texto en la pantalla principal. Llevara 2 parametros: parametro 1 → texto del render, parametro 2 → variable del rectangulo 
+
+
+#Fin funcion o metodo vidas:
+
+
+
+
 
 
 #Dimenzionar el tamaño (w x h) de la ventana del juego 
@@ -182,6 +201,7 @@ wall = Wall(total_latrillos)#muro que tiene 112 ladrillos
 #Fin validar cantidad de ladrillos 
 
 puntaje = 0
+Vidas_Jugador = 2 #El juego comienza con 5 vidas
 #Fin de invocaciones
 
 #Loop (Revisión cíclica de los eventos) => Listener esta pendiente del acontecimiento
@@ -198,6 +218,8 @@ while True:
     ball.pibot() #Call pibot de la clase 1:     
     mywindows.fill(BG_COLOR)#color de dondo de ventana       
     colocar_Puntaje ()
+
+    poner_Vida ()
     mywindows.blit(ball.img_ball, ball.rect)#Draw de la ball
     mywindows.blit(player.img_bar, player.rect)#Draw de la bar
     wall.draw(mywindows)       #Dibujar muro   
@@ -226,7 +248,14 @@ while True:
         puntaje = puntaje + 1#Primera forma de hacer el incremento
                              #Segunda forma de hacer el incremento → puntaje += 1
 
-    if ball.rect.bottom >= HEIGHT:#llamar la funcion Game_Over solo cuando la bola toca piso
-       Game_Over ()#LLamamos a la funcion Game_Over, cuando la pelota toque piso
+    #if ball.rect.bottom >= HEIGHT:#llamar la funcion Game_Over solo cuando la bola toca piso
+      # Game_Over ()#LLamamos a la funcion Game_Over, cuando la pelota toque piso que muestra mensaje perdiste
+    
+    #validar vidas → Restar vidas 
+    if ball.rect.bottom >= HEIGHT:#Restar vdias solo cuando la bola toca piso
+       Vidas_Jugador = Vidas_Jugador - 1 #Restarle vida , cuando la pelota toque piso → Vidas_Jugador -=1
+    
+    if Vidas_Jugador == 0 :
+        Game_Over ()#LLamamos a la funcion Game_Over, cuando la pelota toque piso que muestra mensaje perdiste
 
      #Fin de programacion de Collisions entre la bola y el wall(ladrillos)
